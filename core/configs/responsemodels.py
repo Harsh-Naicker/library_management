@@ -9,7 +9,7 @@ class CheckoutResponseModel(ResponseModel):
     book_copy_id: Optional[int] = None
 
 class ReservationResponseModel(ResponseModel):
-    reservation_id: int
+    reservation_id: Optional[int] = None
 
 class BookReturnResponseModel(ResponseModel):
     fine: Optional[str] = ""
