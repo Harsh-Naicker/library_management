@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "1cb4a4ad-839c-4a5c-b2b1-3881e229e3c1",
+		"name": "zenduty-library-management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21287837"
+	},
+	"item": [
+		{
+			"name": "Checkout",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Return",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
