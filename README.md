@@ -4,40 +4,52 @@ Implementation Plan
 
 Models
 1. Books
+
 ID, Title, Author (Fk -> Authors), Created At
 
 2. Book copies
+
 ID, Fk -> Book , Created At
 (A book can have multiple copies)
 
 3. Authors
+
 ID , AuthorName, Created At
 
 4. Members
+
 ID, Name, Created At
 
 5. Reservations
+
 ID, Book ID, Member ID, Created At, Requested At
 
 6. Reservation Live State
+
 ID, Reservation ID, Status, Created At, Updated At
 Status can be Queued, Fulfilled
 
 7. Reservation State History
+
 ID, Live Status ID, Status, Created At, Updated At
+
 
 To handle reservations -> Make processing Asynchronous using Kafka
 Create a pubsub model
 
+
 8. Checkout
+
 ID, Book Copy ID, Created at, End Date
 
 9. Book Checkout Status
+
 ID, Book Copy ID, Checkout Status
 
 Statuses: Checked Out, Available/Returned
 
 10. Book Checkout Status History
+
 ID, Checkout Status ID, Member ID Fk -> Member, Status
 Status: Checked Out, Available / returned
 
