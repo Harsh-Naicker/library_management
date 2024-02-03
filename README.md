@@ -1,96 +1,12 @@
 # Library Management System
 
-Implementation Plan
+# ERD Diagram
+<img src="https://github.com/Harsh-Naicker/library_management/blob/master/erd.png">
+Note: `checkout/` in Checkout model is not supposed to be nullable. I forgot to add it earlier so django needed me to add a default or make it nullable
 
-Models
-1. Books
+Postman collection has been provided to test the three completed endpoints which are 'reserve/', 'checkout/' and 'return/'
 
-ID, Title, Author (Fk -> Authors), Created At
+As explained in the video, the original plan was to create an event based system using Kafka.
+Was going to create a pubsub model to push and consume events whenever a book is returned to automatically look for queued reservations and do a checkout from the system
 
-2. Book copies
-
-ID, Fk -> Book , Created At
-(A book can have multiple copies)
-
-3. Authors
-
-ID , AuthorName, Created At
-
-4. Members
-
-ID, Name, Created At
-
-5. Reservations
-
-ID, Book ID, Member ID, Created At, Requested At
-
-6. Reservation Live State
-
-ID, Reservation ID, Status, Created At, Updated At
-Status can be Queued, Fulfilled
-
-7. Reservation State History
-
-ID, Live Status ID, Status, Created At, Updated At
-
-
-To handle reservations -> Make processing Asynchronous using Kafka
-Create a pubsub model
-
-
-8. Checkout
-
-ID, Book Copy ID, Created at, End Date
-
-9. Book Checkout Status
-
-ID, Book Copy ID, Checkout Status
-
-Statuses: Checked Out, Available/Returned
-
-10. Book Checkout Status History
-
-ID, Checkout Status ID, Member ID Fk -> Member, Status
-Status: Checked Out, Available / returned
-
-
-Only a reservation is possible if all copies of a book have been checked out
-
-Endpoints
-
-`checkout/`
-- Member ID
-- Book ID
-- End Date
-
-Test Cases
-1. A book copy is available -> Checkout that Book (Synchronous process)
-2. No book copy is available -> Handle with appropriate response (Synchronous process)
-
-`reserve/`
-- Member ID
-- Book ID
-Works in FIFO Manner
-
-return
-- Book Copy ID
-
-`return/`
-- member_id
-- book_copy_id
-
-return
-- status successful
-- overdue fine
-
-`fines/`
-- member_id
-
-Use BookAvailabilityStatus to find all books which are in checked out state. Then find their latest Checkout entry mapped to the member to fetch the end date and evaluate the fine if applicable
-
-
-
-
-Add CDC Listener on Checkout Status History / Explicity push kafka events
-As soon as a book is returned, listen for change in Checkout Status History.
-If Status is returned, check in Reservations if any outstanding reservation exists for that book. If yes, do a system generated checkout (Asynchronous process using Kafka)
+The design of the models supports all the required analytics computation.
